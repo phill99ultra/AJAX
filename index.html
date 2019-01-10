@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Geo</title>
+</head>
+<body>
+<select id="countries">
+    <option value="-1">--Choose Country--</option>
+</select>
+<select id="cities" disabled>
+    <option value="-1">--Choose City--</option>
+</select>
+
+
+    <script>
+        const USERNAME = 'vaneatka';
+        const URL = 'http://api.geonames.org/countryInfoJSON';
+        //load all countries
+        function loadCountries(){
+            var place = document.getElementById('countries');
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", URL + '?username=' + USERNAME);
+            xhr.onload = function(){
+                data = JSON.parse(xhr.responseText);
+                //console.log(data);
+                for(var i = 0; i < data.geonames.length; i++){
+                    var country = data.geonames[i];
+                    console.log(country);
+                    place.innerHTML += '<option value =' + country.coountryCode + '>' + country.countryName + '</option>';  
+                }
+            }
+            xhr.send();
+        }
+        loadCountries();
+        
+    </script>
+</body>
+</html>
