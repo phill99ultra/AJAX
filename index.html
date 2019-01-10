@@ -5,7 +5,7 @@
     <title>Geo</title>
 </head>
 <body>
-<select id="countries">
+<select id="countries" onchange="loadCities()">
     <option value="-1">--Choose Country--</option>
 </select>
 <select id="cities" disabled>
@@ -15,25 +15,45 @@
 
     <script>
         const USERNAME = 'vaneatka';
-        const URL = 'http://api.geonames.org/countryInfoJSON';
+        const URL_COUNTRIES = 'http://api.geonames.org/countryInfoJSON';
+        const URL_CITIES = 'http://api.geonames.org/searchJSON';
         //load all countries
         function loadCountries(){
             var place = document.getElementById('countries');
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", URL + '?username=' + USERNAME);
+            xhr.open("GET", URL_COUNTRIES + '?username=' + USERNAME);
             xhr.onload = function(){
                 data = JSON.parse(xhr.responseText);
                 //console.log(data);
                 for(var i = 0; i < data.geonames.length; i++){
                     var country = data.geonames[i];
                     console.log(country);
-                    place.innerHTML += '<option value =' + country.coountryCode + '>' + country.countryName + '</option>';  
+                    place.innerHTML += '<option value =' + country.countryCode + '>' + country.countryName + '</option>';  
+                }
+            }
+            xhr.send();
+        }
+        
+        //load cities
+        function loadCities(){
+            var place = document.getElementById('countries');
+            var town = document.getElementById('cities');
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", URL_CITIES + '?username=' + USERNAME + '&country=' + place.value);
+            town.removeAttribute('disabled');
+            xhr.onload = function(){
+                data = JSON.parse(xhr.responseText);
+                //console.log(data);
+                town.innerHTML = '';
+                for(var i = 0; i < data.geonames.length; i++){
+                    var city = data.geonames[i];
+                    //console.log(country);
+                    town.innerHTML += '<option value =' + city.countryCode + '>' + city.name + '</option>';  
                 }
             }
             xhr.send();
         }
         loadCountries();
-        
     </script>
 </body>
 </html>
