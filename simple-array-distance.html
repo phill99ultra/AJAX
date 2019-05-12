@@ -1,0 +1,26 @@
+<script>
+    // calculate distance
+    // 0 -> road
+    // 1 -> diamonds
+    // 2 -> wall
+    // 9 -> robot
+    $road = [9, 0, 0, 0, 0, 0, 0, 0, 0, 1];    
+    $robot = 0; // position of robot
+    $diamond = 9; // position of diamond
+    $distance = 0;
+    for ($x = $robot + 1; $x < $diamond; $x++) {
+        $distance++;
+    }
+    document.write($distance);
+    
+    document.write('<hr>');
+
+    $road = [1, 0, 0, 0, 0, 0, 0, 0, 0, 9];    
+    $robot = 9; // position of robot
+    $diamond = 0; // position of diamond
+    $distance = 0;
+    for ($x = 9; $x > 1; $x--) {
+        $distance++;
+    }
+    document.write($distance);
+</script>

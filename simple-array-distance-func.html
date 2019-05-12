@@ -1,0 +1,67 @@
+<script>
+    // $road = [0, 0, 0, 0, 'r', 0, 0, 0, 0, 'd'];
+    $road = ['_', '_', '_', '_', 'd', '.', '_', '.', '_', 'r'];
+    $consume = 10; // 10 units = 1 cell
+    // Logic ///////
+    const search_for = ($what) => {
+        for ($x = 0; $x < 10; $x++) {
+            if ( $road[$x] == $what) {
+                return $x;
+            }
+        }       
+    }
+
+
+    const where_is_robot = () => {
+        return search_for('r');
+    }
+
+    const where_is_diamond = () => {
+        return search_for('d');
+    }
+    const distance = ($x_from, $x_to) => {
+        $distance = 0;
+        if ($x_from < $x_to) {
+            for ($x = $x_from + 1; $x < $x_to; $x++ ) {
+                $distance++;
+            }
+        } 
+        if ($x_from > $x_to) {
+            for ($x = $x_from - 1; $x > $x_to; $x--) {
+                $distance++;
+            }
+        }
+        
+        return $distance;
+    }
+    const energy = ($x_from, $x_to) => {
+        let $energy = 0;
+        console.log('dnadljkan')
+        if ($x_from < $x_to) {
+            for ($x = $x_from + 1; $x < $x_to; $x++ ) {
+                $energy += $consume;
+            }
+            console.log('left')
+        } 
+        if ($x_from > $x_to) {
+            for ($x = $x_from - 1; $x > $x_to; $x--) {
+                $energy += $consume;
+                console.log('right')
+            }
+        }
+        
+        return $energy;
+    }
+    // Logic ///////
+    $robot = where_is_robot();
+    $diamond = where_is_diamond();
+    $distance = distance($robot, $diamond);
+    $energy = energy($robot, $diamond);
+    document.write('position of robot is ' + $robot);
+    document.write('<hr>');
+    document.write('position of diamond is ' + $diamond);
+    document.write('<hr>');
+    document.write('distance between robot and diamond is ' + $distance + ' cells');
+    document.write('<hr>');
+    document.write('fuel consumed for that distance ' + $energy);
+</script>
